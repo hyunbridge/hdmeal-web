@@ -66,6 +66,11 @@ body {
 	}
 }
 
+.swal-vertical-buttons {
+  flex-direction: column;
+}
+
+
 #back {
 	display: inline-block;
 	position: absolute;
