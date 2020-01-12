@@ -1,47 +1,7 @@
-.container {
-  max-width: 960px;
-}
-
 body {
 	background-color: #f5f5f5;
 	font-family: 'Spoqa Han Sans', sans-serif;
 }
-
-/*
- * Custom translucent site header
- */
-
-.site-header {
-  background-color: rgba(0, 0, 0, .85);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-}
-.site-header a {
-  color: #999;
-  transition: ease-in-out color .15s;
-}
-.site-header a:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
-
-/*
- * Extra utilities
- */
-
-.flex-equal > * {
-  -ms-flex: 1;
-  flex: 1;
-}
-@media (min-width: 768px) {
-  .flex-md-equal > * {
-    -ms-flex: 1;
-    flex: 1;
-  }
-}
-
-.overflow-hidden { overflow: hidden; }
 
 ul{
   list-style: none;
@@ -101,4 +61,14 @@ ul{
     h1 {
       font-size: 2rem;
     }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+  	background-color: #161616;
+    color: #f5f5f5;
+  }
+  .card {
+    background-color: #202020;
+  }
 }
