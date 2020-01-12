@@ -5,7 +5,6 @@ const swalDefault = Swal.mixin({
     confirmButton: 'btn btn-primary btn-lg',
     cancelButton: 'btn btn-lg'
   },
-  background: '#f5f5f5',
   buttonsStyling: false,
   heightAuto: false,
   confirmButtonText: "확인",
@@ -14,7 +13,6 @@ const swalDefault = Swal.mixin({
 const swalFatalError = Swal.mixin({
   icon: "error",
   title: "오류",
-  background: '#f5f5f5',
   heightAuto: false,
   showConfirmButton: false,
   allowEscapeKey : false,
@@ -48,7 +46,6 @@ $("#save").click(function() {
   //    icon: "warning",
   //    title: "알림을 허용해주세요.",
   //    showConfirmButton: false,
-  //    background: '#f5f5f5',
   //    heightAuto: false,
   //    allowEscapeKey : false,
   //    allowOutsideClick: false
@@ -82,11 +79,10 @@ $("#delete").click(function() {
     cancelButtonText: "음.. 생각해볼게요!",
     customClass: {
       actions: 'swal-vertical-buttons',
-      confirmButton: 'btn',
+      confirmButton: 'btn textOnly',
       cancelButton: 'btn btn-primary btn-lg mb-2'
     },
     focusCancel: true,
-    background: '#f5f5f5',
     buttonsStyling: false,
     heightAuto: false,
     reverseButtons: true
