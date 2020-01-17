@@ -92,3 +92,17 @@ body {
 		border: 1px solid #353535;
 	}
 }
+
+.onesignal-customlink-explanation {
+	margin-bottom: .75rem!important;
+	font-size: 1.25rem!important;
+	font-weight: 500!important;
+	font-family: 'Spoqa Han Sans', sans-serif!important;
+	color: #000!important;
+}
+.onesignal-customlink-subscribe {
+	color: #007bff!important;
+	font-size: 1rem!important;
+  font-weight: 400!important;
+	font-family: 'Spoqa Han Sans', sans-serif!important;
+}
