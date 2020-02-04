@@ -26,7 +26,8 @@ const cacheList = [
   'https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js',
   'https://cdn.jsdelivr.net/npm/sweetalert2@9.5.4/dist/sweetalert2.all.min.js',
   'https://cdn.jsdelivr.net/npm/swiper@5.3.0/css/swiper.min.css',
-  'https://cdn.jsdelivr.net/npm/swiper@5.3.0/js/swiper.min.js'
+  'https://cdn.jsdelivr.net/npm/swiper@5.3.0/js/swiper.min.js',
+  'https://cdn.onesignal.com/sdks/OneSignalSDK.js'
 ];
 
 const log = msg => {
