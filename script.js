@@ -5,7 +5,7 @@ new Swiper( '.swiper-container', {
     },
     initialSlide: 1,
 });
-$.getJSON("https://hdmapi.hyungyo.me/data.json", function(data) {
+$.getJSON("https://static.api.hdmeal.hgyoseo.com/data.json", function(data) {
 //$.getJSON("data.json", function(data) {
 
   function load(name, date, koname, grade, class_) {
