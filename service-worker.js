@@ -13,6 +13,8 @@ const cacheList = [
   '/settings/',
   '/settings/script.js',
   '/settings/style.css',
+  '/settings/OneSignalSDKWorker.js',
+  '/settings/OneSignalSDKUpdaterWorker.js',
   '/icons/192',
   '/icons/512',
   '/favicon.ico',
