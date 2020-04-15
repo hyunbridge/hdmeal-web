@@ -13,7 +13,7 @@ new Swiper( '.swiper-container', {
     },
     initialSlide: 1,
 });
-$.getJSON("https://static.api.hdmeal.hgyoseo.com/data.json", function(data) {
+$.getJSON("https://static.api.hdml.kr/data.json", function(data) {
 //$.getJSON("data.json", function(data) {
 
   function load(name, date, koname, grade, class_) {
