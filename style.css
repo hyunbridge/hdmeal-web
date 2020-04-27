@@ -67,9 +67,19 @@ ul{
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 992px) {
     h1 {
-      font-size: 2rem;
+		padding-left: 0.25em !important;
+    }
+}
+@media screen and (max-width: 991px) {
+    h1 {
+	  text-align: center;
+    }
+}
+@media screen and (max-width: 575px) {
+    h1 {
+	  font-size: 2rem;
     }
 }
 
