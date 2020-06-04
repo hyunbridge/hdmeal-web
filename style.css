@@ -11,20 +11,47 @@
 body {
 	background-color: #f5f5f5;
 	font-family: 'Spoqa Han Sans', sans-serif;
+	transition: all 0.5s ease;
+	overflow-y: hidden;
 }
 
-ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .swiper-container {
-  opacity: 0;
+	visibility: hidden;
+	opacity: 0;
+	height: 100vh;
+}
+
+.swiper-btn {
+	font-size: 0.5em;
+	z-index: 1000;
+	cursor: pointer;
+}
+
+.swiper-btn-disabled {
+	opacity: 50%;
+	cursor: auto;
+}
+
+mark {
+	font-weight: 700;
+	display: inline-block;
+	line-height: 0em;
+	padding-bottom: 0.5em;
+	background-color: #c2dfff;
+}
+
+.hidden {
+	display: none;
 }
 
 .lds-ring {
-  display: inline-block;
+	display: inline-block;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -68,27 +95,44 @@ ul{
 }
 
 @media screen and (min-width: 992px) {
-    h1 {
-		padding-left: 0.25em !important;
-    }
+	h1 {
+		padding-left: 0.8em !important;
+	}
 }
+
 @media screen and (max-width: 991px) {
-    h1 {
-	  text-align: center;
-    }
+	h1 {
+		text-align: center;
+	}
 }
+
 @media screen and (max-width: 575px) {
-    h1 {
-	  font-size: 2rem;
-    }
+	h1 {
+		font-size: 2rem;
+	}
+	.swiper-btn {
+		display: none;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-  	background-color: #161616;
-    color: #f5f5f5;
-  }
-  .card {
-    background-color: #202020;
-  }
+	body {
+		background-color: #161616;
+		color: #f5f5f5;
+	}
+	.card {
+		background-color: #202020;
+	}
+	.textOnly, .textOnly:hover {
+		color: #f5f5f5;
+	}
+	.input-group-text, .custom-select {
+		background-color: #202020;
+		color: #f5f5f5;
+		border: 1px solid #353535;
+	}
+	mark {
+		color: #f5f5f5;
+		background-color: #007bff;
+	}
 }

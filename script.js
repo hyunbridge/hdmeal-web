@@ -6,12 +6,13 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2019-2020, Hyungyo Seo
 
-new Swiper( '.swiper-container', {
-    navigation : { // 네비게이션
-        nextEl : '.swiper-button-next', // 오른쪽(다음) 화살표
-        prevEl : '.swiper-button-prev', // 왼쪽(이전) 화살표
-    },
-    initialSlide: 1,
+// 스와이퍼 정의
+const navigator = new Swiper('.swiper-container', {
+  navigation: { // 네비게이션
+    nextEl: '.swiper-btn-next', // 오른쪽(다음) 화살표
+    prevEl: '.swiper-btn-priv', // 왼쪽(이전) 화살표
+  },
+  initialSlide: 1,
 });
 
 // 데이터 불러오기
@@ -65,16 +66,10 @@ function fetchData() {
       }
     }
 
-    if (localStorage.Grade && localStorage.Class) {
-      load("yesterday", "Yesterday", "어제", localStorage.Grade, localStorage.Class);
-      load("today", "Today", "오늘", localStorage.Grade, localStorage.Class);
-      load("tomorrow", "Tomorrow", "내일", localStorage.Grade, localStorage.Class);
-    } else {
-      load("yesterday", "Yesterday", "어제", 1, 1);
-      load("today", "Today", "오늘", 1, 1);
-      load("tomorrow", "Tomorrow", "내일", 1, 1);
-    }
-  }).done(function(){
+    load("yesterday", "Yesterday", "어제", userGrade, userClass);
+    load("today", "Today", "오늘", userGrade, userClass);
+    load("tomorrow", "Tomorrow", "내일", userGrade, userClass);
+  }).done(function () {
     // 로딩 끝나면 화면전환
     $(".lds-ring").animate(
       {
@@ -83,14 +78,14 @@ function fetchData() {
       500
     );
     $(".lds-ring").remove();
+    $(".swiper-container").css({ 'visibility': 'visible', 'overflow-y': 'auto' });
     $(".swiper-container").animate(
       {
         opacity: "1"
       },
       500
     );
-    $(".swiper-button").delay(1000).animate({ opacity: '0' }, 500);
-  }).fail(function(xhr, status, error){
+  }).fail(function (xhr, status, error) {
     console.log(xhr);
     console.log(status);
     console.log(error);
@@ -98,7 +93,7 @@ function fetchData() {
     Swal.fire({
       icon: "error",
       title: "불러오지 못했습니다.",
-      text: "컴퓨터의 인터넷 연결을 확인해 주세요.",
+      text: "장치의 인터넷 연결을 확인해 주세요.",
       confirmButtonText: "다시 시도",
       customClass: {
         actions: 'swal-vertical-buttons',
@@ -106,7 +101,7 @@ function fetchData() {
       },
       buttonsStyling: false,
       heightAuto: false,
-      allowEscapeKey : false,
+      allowEscapeKey: false,
       allowOutsideClick: false
     }).then(result => {
       if (result.value) {
@@ -115,8 +110,30 @@ function fetchData() {
     });
   });
 }
+
+// 학년/반 정보 불러온 뒤 데이터 로딩 실행
+if (localStorage.Grade && localStorage.Class) {
+  userGrade = localStorage.Grade;
+  userClass = localStorage.Class;
+} else {
+  localStorage.Grade = 1;
+  localStorage.Class = 1;
+  userGrade = 1;
+  userClass = 1;
+}
 fetchData();
 
+// 단축키 할당
+$('body').keydown(function (e) {
+  if (e.which == 37) {  // ArrowLeft
+    navigator.slidePrev();
+  }
+  if (e.which == 39) {  // ArrowRight
+    navigator.slideNext();
+  }
+});
+
+// 서비스워커 등록
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js').then(() => {
     console.log('Service Worker Registered');

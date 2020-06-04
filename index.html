@@ -16,8 +16,10 @@
     <title>흥덕고 급식</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.0/dist/css/bootstrap.min.css" integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spoqa-han-sans@2.1.2/css/SpoqaHanSans-kr.css" integrity="sha256-aJmCWRpyFpTmySvQ211cufLGTm5591O0v/JwKpQhVjA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.0/dist/css/bootstrap.min.css"
+        integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spoqa-han-sans@2.1.2/css/SpoqaHanSans-kr.css"
+        integrity="sha256-aJmCWRpyFpTmySvQ211cufLGTm5591O0v/JwKpQhVjA=" crossorigin="anonymous">
 
     <link rel="manifest" href="/manifest.webmanifest">
 
@@ -46,17 +48,19 @@
 </head>
 
 <body>
-  <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-  </div>
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div id="yesterday">
-                    <h1 id="date" class="display-5 font-weight-normal m-4">불러오는 중...</h1>
+                    <h1 class="col display-5 font-weight-normal mt-4"><mark
+                            class="swiper-btn swiper-btn-priv swiper-btn-disabled">&lt; 그저께</mark><span id="date"
+                            class="m-2">불러오는 중...</span><mark class="swiper-btn swiper-btn-next">오늘 &gt;</mark></h1>
 
                     <div class="card-group m-2">
                         <div class="col-lg">
@@ -70,10 +74,10 @@
                         <div class="col-lg">
                             <div class="card m-2">
                                 <div class="card-body">
-                                  <div class="row">
-                                    <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                    <a href="/settings/" class="col-3 text-right">설정</a>
-                                  </div>
+                                    <div class="row">
+                                        <h5 id="ttTitle" class="col card-title">시간표</h5>
+                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                    </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
                             </div>
@@ -92,7 +96,9 @@
             </div>
             <div class="swiper-slide">
                 <div id="today">
-                    <h1 id="date" class="display-5 font-weight-normal m-4">불러오는 중...</h1>
+                    <h1 class="col display-5 font-weight-normal mt-4"><mark class="swiper-btn swiper-btn-priv">&lt;
+                            어제</mark><span id="date" class="m-2">불러오는 중...</span><mark
+                            class="swiper-btn swiper-btn-next">내일 &gt;</mark></h1>
 
                     <div class="card-group m-2">
                         <div class="col-lg">
@@ -106,10 +112,10 @@
                         <div class="col-lg">
                             <div class="card m-2">
                                 <div class="card-body">
-                                  <div class="row">
-                                    <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                    <a href="/settings/" class="col-3 text-right">설정</a>
-                                  </div>
+                                    <div class="row">
+                                        <h5 id="ttTitle" class="col card-title">시간표</h5>
+                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                    </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
                             </div>
@@ -127,7 +133,9 @@
             </div>
             <div class="swiper-slide">
                 <div id="tomorrow">
-                    <h1 id="date" class="display-5 font-weight-normal m-4">불러오는 중...</h1>
+                    <h1 class="col display-5 font-weight-normal mt-4"><mark class="swiper-btn swiper-btn-priv">&lt;
+                            오늘</mark><span id="date" class="m-2">불러오는 중...</span><mark
+                            class="swiper-btn swiper-btn-next swiper-btn-disabled">모레 &gt;</mark></h1>
 
                     <div class="card-group m-2">
                         <div class="col-lg">
@@ -141,10 +149,10 @@
                         <div class="col-lg">
                             <div class="card m-2">
                                 <div class="card-body">
-                                  <div class="row">
-                                    <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                    <a href="/settings/" class="col-3 text-right">설정</a>
-                                  </div>
+                                    <div class="row">
+                                        <h5 id="ttTitle" class="col card-title">시간표</h5>
+                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                    </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
                             </div>
@@ -162,16 +170,14 @@
             </div>
         </div>
         <p class="text-muted text-center fixed-bottom">&copy; 2019-2020 서현교</p>
-
-        <!-- 네비게이션 지정 -->
-        <div class="swiper-button swiper-button-next"></div>
-        <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-        <div class="swiper-button swiper-button-prev"></div>
-        <!-- 이전 버튼 -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@5.3.0/css/swiper.min.css" integrity="sha256-LeoCmahY07DdIDusQMJmokFFBEQl6m1Fy/ahjZ9AK30=" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/swiper@5.3.0/js/swiper.min.js" integrity="sha256-x7pjDF6AUcRYYjzgzVyFeGlR2AhHhoLqF7x2JsBJBxg=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@5.3.0/css/swiper.min.css"
+        integrity="sha256-LeoCmahY07DdIDusQMJmokFFBEQl6m1Fy/ahjZ9AK30=" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@5.3.0/js/swiper.min.js"
+        integrity="sha256-x7pjDF6AUcRYYjzgzVyFeGlR2AhHhoLqF7x2JsBJBxg=" crossorigin="anonymous"></script>
     <script src="./script.js"></script>
+</body>
 
 </html>
