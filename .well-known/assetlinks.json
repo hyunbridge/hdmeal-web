@@ -1,5 +1,5 @@
 [{
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "kr.hdml.app.pwa",
-                   "sha256_cert_fingerprints": ["79:5A:B3:B6:51:90:78:C2:14:CE:92:CD:18:93:D1:48:10:AA:11:9D:A9:CE:D8:73:AC:7D:83:D0:30:0E:EA:AE"] }
+                   "sha256_cert_fingerprints": ["9D:B2:B5:1B:16:0F:BB:B3:9E:00:AC:D2:FE:4E:40:2E:DC:77:2E:D5:56:3A:F2:FB:6F:A8:D9:26:B2:DC:0C:B5"] }
     }]
