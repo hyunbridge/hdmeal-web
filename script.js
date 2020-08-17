@@ -7,7 +7,7 @@
 // Copyright 2019-2020, Hyungyo Seo
 
 // 스와이퍼 정의
-const navigator = new Swiper('.swiper-container', {
+const navigator_ = new Swiper('.swiper-container', {
   navigation: { // 네비게이션
     nextEl: '.swiper-btn-next', // 오른쪽(다음) 화살표
     prevEl: '.swiper-btn-priv', // 왼쪽(이전) 화살표
@@ -123,19 +123,67 @@ if (localStorage.Grade && localStorage.Class) {
 }
 fetchData();
 
+// 변경 버튼 클릭했을 시 모달
+const settingsModal = $('#settingsModal').html();
+$('.settingsBtn').click(function () {
+  Swal.fire({
+    title: '학년/반 정보 변경',
+    html: settingsModal,
+    showCancelButton: true,
+    confirmButtonText: "저장",
+    cancelButtonText: "취소",
+    customClass: {
+      confirmButton: 'btn btn-primary btn-lg m-2',
+      cancelButton: 'btn btn-secondary btn-lg m-2'
+    },
+    onBeforeOpen: () => {
+      $(".swal2-content #grade").val(userGrade + "학년").prop("selected", true);
+      $(".swal2-content #class").val(userClass + "반").prop("selected", true);
+    },
+    focusCancel: true,
+    buttonsStyling: false,
+    heightAuto: false,
+    reverseButtons: true
+  }).then(result => {
+    if (result.value) {
+      var selectedGrade = $(".swal2-content #grade option:selected").text();
+      var selectedClass = $(".swal2-content #class option:selected").text();
+      localStorage.Grade = selectedGrade;
+      localStorage.Class = selectedClass;
+      userGrade = selectedGrade;
+      userClass = selectedClass;
+      fetchData();
+    }
+  });
+})
+
+// 정보 버튼 클릭했을 시 모달
+$('#infoBtn').click(function () {
+  Swal.fire({
+    title: '흥덕고 급식',
+    html: $('#infoModal').html(),
+    confirmButtonText: "닫기",
+    customClass: {
+      confirmButton: 'btn btn-primary btn-lg m-2',
+    },
+    buttonsStyling: false,
+    heightAuto: false
+  });
+})
+
 // 단축키 할당
 $('body').keydown(function (e) {
   if (e.which == 37) {  // ArrowLeft
-    navigator.slidePrev();
+    navigator_.slidePrev();
   }
   if (e.which == 39) {  // ArrowRight
-    navigator.slideNext();
+    navigator_.slideNext();
   }
 });
 
 // 서비스워커 등록
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js').then(() => {
-    console.log('Service Worker Registered');
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js');
   });
 }

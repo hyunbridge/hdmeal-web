@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spoqa-han-sans@2.1.2/css/SpoqaHanSans-kr.css"
         integrity="sha256-aJmCWRpyFpTmySvQ211cufLGTm5591O0v/JwKpQhVjA=" crossorigin="anonymous">
 
-    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="manifest" href="/webmanifest.json">
 
     <meta name="theme-color" content="#f5f5f5">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -76,7 +76,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                        <a href="#" class="col-3 text-right settingsBtn">변경</a>
                                     </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
@@ -114,7 +114,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                        <a href="#" class="col-3 text-right settingsBtn">변경</a>
                                     </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
@@ -151,7 +151,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <h5 id="ttTitle" class="col card-title">시간표</h5>
-                                        <a href="/settings/" class="col-3 text-right">설정</a>
+                                        <a href="#" class="col-3 text-right settingsBtn">변경</a>
                                     </div>
                                     <ul id="ttBody" class="card-text">불러오는 중...</ul>
                                 </div>
@@ -169,7 +169,36 @@
                 </div>
             </div>
         </div>
-        <p class="text-muted text-center fixed-bottom">&copy; 2019-2020 서현교</p>
+        <p class="text-muted text-center fixed-bottom">&copy; 2019-2020 서현교<a id="infoBtn"href="#" class="m-1">정보</a></p>
+    </div>
+    <div id="settingsModal" class="hidden">
+        <div class="btn-group btn-group-toggle m-3" data-toggle="buttons" id="selGroup" style="width:75%;">
+            <select class="custom-select" id="grade">
+                <option value="1학년">1</option>
+                <option value="2학년">2</option>
+                <option value="3학년">3</option>
+            </select>
+            <div class="input-group-append">
+                <label class="input-group-text" for="btnGroup">학년</label>
+            </div>
+            <select class="custom-select" id="class">
+                <option value="1반">1</option>
+                <option value="2반">2</option>
+                <option value="3반">3</option>
+                <option value="4반">4</option>
+                <option value="5반">5</option>
+                <option value="6반">6</option>
+                <option value="7반">7</option>
+                <option value="8반">8</option>
+                <option value="9반">9</option>
+            </select>
+            <div class="input-group-append">
+                <label class="input-group-text" for="btnGroup">반</label>
+            </div>
+        </div>
+    </div>
+    <div id="infoModal" class="hidden">
+        웹 프레임워크 버전: <span id="version">1.0.0-200817</span>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -177,6 +206,9 @@
         integrity="sha256-LeoCmahY07DdIDusQMJmokFFBEQl6m1Fy/ahjZ9AK30=" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/swiper@5.3.0/js/swiper.min.js"
         integrity="sha256-x7pjDF6AUcRYYjzgzVyFeGlR2AhHhoLqF7x2JsBJBxg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./swal.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.4/dist/sweetalert2.all.min.js"
+        integrity="sha256-myW9RSmiD762xqIfz84oisc7k5cq+wDbu9krInQ5JU8=" crossorigin="anonymous"></script>
     <script src="./script.js"></script>
 </body>
 

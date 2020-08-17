@@ -1,26 +1,47 @@
-/**
- * Service Worker
- */
+// This is the "Offline page" service worker
 
-const _version = 'v1';
+importScripts('https://cdn.jsdelivr.net/npm/workbox-sw@5.1.3/build/workbox-sw.js');
 
-const log = msg => {
-  console.log(`[ServiceWorker ${_version}] ${msg}`);
+const CACHE = "pwabuilder-page";
+
+// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
+const offlineFallbackPage = "offline.html";
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener('install', async (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.add(offlineFallbackPage))
+  );
+});
+
+if (workbox.navigationPreload.isSupported()) {
+  workbox.navigationPreload.enable();
 }
 
-// Life cycle: INSTALL
-self.addEventListener('install', event => {
-  self.skipWaiting();
-  log('INSTALL');
-});
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const preloadResp = await event.preloadResponse;
 
-// Life cycle: ACTIVATE
-self.addEventListener('activate', event => {
-  log('Activate');
-});
+        if (preloadResp) {
+          return preloadResp;
+        }
 
-// Functional: FETCH
-self.addEventListener('fetch', event => {
-  log('Fetch ' + event.request.url);
-  event.respondWith(fetch(event.request));
+        const networkResp = await fetch(event.request);
+        return networkResp;
+      } catch (error) {
+
+        const cache = await caches.open(CACHE);
+        const cachedResp = await cache.match(offlineFallbackPage);
+        return cachedResp;
+      }
+    })());
+  }
 });
