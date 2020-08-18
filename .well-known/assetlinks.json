@@ -1,5 +1,26 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "kr.hdml.app.pwa",
-                   "sha256_cert_fingerprints": ["9D:B2:B5:1B:16:0F:BB:B3:9E:00:AC:D2:FE:4E:40:2E:DC:77:2E:D5:56:3A:F2:FB:6F:A8:D9:26:B2:DC:0C:B5"] }
-    }]
+[
+      {
+            "relation": [
+                  "delegate_permission/common.handle_all_urls"
+            ],
+            "target": {
+                  "namespace": "android_app",
+                  "package_name": "kr.hdml.app.pwa",
+                  "sha256_cert_fingerprints": [
+                        "BD:BF:DB:85:E1:53:50:E2:0E:1E:B4:67:22:22:6A:F0:42:84:B7:96:8B:50:73:59:8B:E4:12:47:FC:A4:CA:83"
+                  ]
+            }
+      },
+      {
+            "relation": [
+                  "delegate_permission/common.handle_all_urls"
+            ],
+            "target": {
+                  "namespace": "android_app",
+                  "package_name": "kr.hdml.app.pwa",
+                  "sha256_cert_fingerprints": [
+                        "9D:B2:B5:1B:16:0F:BB:B3:9E:00:AC:D2:FE:4E:40:2E:DC:77:2E:D5:56:3A:F2:FB:6F:A8:D9:26:B2:DC:0C:B5"
+                  ]
+            }
+      }
+]
