@@ -1,11 +1,15 @@
-// This is the "Offline page" service worker
+// ██╗  ██╗██████╗ ███╗   ███╗███████╗ █████╗ ██╗
+// ██║  ██║██╔══██╗████╗ ████║██╔════╝██╔══██╗██║
+// ███████║██║  ██║██╔████╔██║█████╗  ███████║██║
+// ██╔══██║██║  ██║██║╚██╔╝██║██╔══╝  ██╔══██║██║
+// ██║  ██║██████╔╝██║ ╚═╝ ██║███████╗██║  ██║███████╗
+// ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+// Copyright 2019-2020, Hyungyo Seo
+
+const API_ORIGIN = "https://static.api.hdml.kr";
+
 
 importScripts('https://cdn.jsdelivr.net/npm/workbox-sw@5.1.3/build/workbox-sw.js');
-
-const CACHE = "pwabuilder-page";
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "offline.html";
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -13,35 +17,56 @@ self.addEventListener("message", (event) => {
   }
 });
 
+
+// 오프라인 페이지 프리페칭
+offlineFallbackPage = "/offline.html"
 self.addEventListener('install', async (event) => {
   event.waitUntil(
-    caches.open(CACHE)
+    caches.open("Offline")
       .then((cache) => cache.add(offlineFallbackPage))
   );
 });
 
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
+// API 요청
+workbox.routing.registerRoute(
+  ({url}) => url.origin === API_ORIGIN,
+  new workbox.strategies.NetworkFirst({
+    cacheName: "API",
+    plugins: [
+      new workbox.expiration.ExpirationPlugin({
+        maxEntries: 1,
+        maxAgeSeconds: 86400 // 1 Day
+      }),
+      new workbox.backgroundSync.BackgroundSyncPlugin("API", {
+        maxRetentionTime: 1440 // 24 Hours
+      })
+    ]
+  })
+);
 
-        if (preloadResp) {
-          return preloadResp;
-        }
 
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
+// 나머지 요청
+workbox.routing.setDefaultHandler(
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: "Cache",
+    plugins: [
+      new workbox.expiration.ExpirationPlugin({
+        maxEntries: 20
+      })
+    ]
+  })
+);
 
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
-      }
-    })());
+
+// Failback
+workbox.routing.setCatchHandler(({event}) => {
+  switch (event.request.destination) {
+    case 'document':
+      caches.open("Offline")
+      return caches.match(offlineFallbackPage);
+
+    default:
+      return Response.error();
   }
 });
