@@ -181,6 +181,11 @@ $('body').keydown(function (e) {
   }
 });
 
+// a href="#" 클릭시 화면 상단 이동 방지
+$('a[href="#"]').click(function(e) {
+	e.preventDefault();
+});
+
 // 서비스워커 등록
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
