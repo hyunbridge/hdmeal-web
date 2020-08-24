@@ -85,6 +85,10 @@ function fetchData() {
       },
       500
     );
+    // 오후 5시 이후면, 다음 날 화면 보여주기
+    if (new Date().getHours() > 17) {
+      navigator_.slideNext();
+    }
   }).fail(function (xhr, status, error) {
     console.log(xhr);
     console.log(status);
