@@ -6,69 +6,81 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2019-2020, Hyungyo Seo
 
+let today = new Date();
+const Week_KO = ['일', '월', '화', '수', '목', '금', '토']
+
 // 스와이퍼 정의
-const navigator_ = new Swiper('.swiper-container', {
-  navigation: { // 네비게이션
-    nextEl: '.swiper-btn-next', // 오른쪽(다음) 화살표
-    prevEl: '.swiper-btn-priv', // 왼쪽(이전) 화살표
-  },
-  initialSlide: 1,
-});
+const navigator_ = new Swiper('.swiper-container');
+
+// ISO Format 날짜 변환
+function ISODate(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  if (day < 10) {
+    day = '0' + day;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+  return year + '-' + month + '-' + day
+}
 
 // 데이터 불러오기
 function fetchData() {
-  $.getJSON("https://static.api.hdml.kr/data.json", function (data) {
+  $.getJSON("https://static.api.hdml.kr/data.v2.json", function (data) {
+    var keys = Object.keys(data)
+    keys.forEach(key => {
+      slideId = 'hdm-slide_' + key;
+      var date = new Date(key);
+      navigator_.appendSlide('<div class="swiper-slide" id="' + slideId + '">' + $('#hdm-slide').html() + '</div>');
+      $("#" + slideId + " #date").text(key + '(' + Week_KO[date.getDay()] + ')');
 
-    function load(name, date, koname, grade, class_) {
-
-      $("#" + name + " #date").text(koname + ", " + data[date].Date);
-
-      menu = data[date].Meal.Menu;
-      $("#" + name + " #menuBody").text("");
+      menu = data[key].Meal[0];
+      $("#" + slideId + " #menuBody").text("");
       if (!menu) {
-        $("#" + name + " #menuBody").text("식단정보가 없습니다.");
+        $("#" + slideId + " #menuBody").text("식단정보가 없습니다.");
       } else if (menu[0] == "") {
-        $("#" + name + " #menuBody").text("식단정보가 없습니다.");
+        $("#" + slideId + " #menuBody").text("식단정보가 없습니다.");
       } else {
         for (var menuLoc in menu) {
-          $("#" + name + " #menuBody").append("<li>" + menu[menuLoc] + "</li>");
+          $("#" + slideId + " #menuBody").append("<li>" + menu[menuLoc] + "</li>");
         }
       }
 
-      $("#" + name + " #ttTitle").text(grade + "학년 " + class_ + "반 시간표");
-      if (data[date].Timetable) {
-        tt = data[date].Timetable[grade][class_];
+      $("#" + slideId + " #ttTitle").text(userGrade + "학년 " + userClass + "반 시간표");
+      if (data[key].Timetable) {
+        tt = data[key].Timetable[userGrade][userClass];
         console.log(tt);
-        $("#" + name + " #ttBody").text("");
+        $("#" + slideId + " #ttBody").text("");
         if (!tt) {
-          $("#" + name + " #ttBody").text("시간표가 없습니다.");
+          $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
         } else if (tt.length == 0) {
-          $("#" + name + " #ttBody").text("시간표가 없습니다.");
+          $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
         } else {
           for (var ttLoc in tt) {
-            $("#" + name + " #ttBody").append("<li>" + tt[ttLoc] + "</li>");
+            $("#" + slideId + " #ttBody").append("<li>" + tt[ttLoc] + "</li>");
           }
         }
       } else {
-        $("#" + name + " #ttBody").text("시간표가 없습니다.");
+        $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
       }
 
-      schdl = data[date].Schedule;
-      $("#" + name + " #schdlBody").text("");
+      schdl = data[key].Schedule;
+      $("#" + slideId + " #schdlBody").text("");
       if (!schdl) {
-        $("#" + name + " #schdlBody").text("학사일정이 없습니다.");
+        $("#" + slideId + " #schdlBody").text("학사일정이 없습니다.");
       } else if (schdl[0] == "") {
-        $("#" + name + " #schdlBody").text("학사일정이 없습니다.");
+        $("#" + slideId + " #schdlBody").text("학사일정이 없습니다.");
       } else {
         for (var schdlLoc in schdl) {
-          $("#" + name + " #schdlBody").append("<li>" + schdl[schdlLoc] + "</li>");
+          $("#" + slideId + " #schdlBody").append("<li>" + schdl[schdlLoc] + "</li>");
         }
       }
-    }
-
-    load("yesterday", "Yesterday", "어제", userGrade, userClass);
-    load("today", "Today", "오늘", userGrade, userClass);
-    load("tomorrow", "Tomorrow", "내일", userGrade, userClass);
+    })
+    navigator_.slideTo(keys.indexOf(ISODate(today)), 0);
+    $("#" + 'hdm-slide_' + keys[0] + " .swiper-btn-priv").addClass('swiper-btn-disabled')
+    $("#" + 'hdm-slide_' + keys[keys.length - 1] + " .swiper-btn-next").addClass('swiper-btn-disabled')
   }).done(function () {
     // 로딩 끝나면 화면전환
     $(".lds-ring").animate(
@@ -89,6 +101,43 @@ function fetchData() {
     if (new Date().getHours() > 17) {
       navigator_.slideNext();
     }
+    // 변경 버튼 클릭했을 시 모달
+    const settingsModal = $('#settingsModal').html();
+    $('.settingsBtn').click(function () {
+      Swal.fire({
+        title: '학년/반 정보 변경',
+        html: settingsModal,
+        showCancelButton: true,
+        confirmButtonText: "저장",
+        cancelButtonText: "취소",
+        customClass: {
+          confirmButton: 'btn btn-primary btn-lg m-2',
+          cancelButton: 'btn btn-secondary btn-lg m-2'
+        },
+        onBeforeOpen: () => {
+          $(".swal2-content #grade").val(userGrade + "학년").prop("selected", true);
+          $(".swal2-content #class").val(userClass + "반").prop("selected", true);
+        },
+        focusCancel: true,
+        buttonsStyling: false,
+        heightAuto: false,
+        reverseButtons: true
+      }).then(result => {
+        if (result.value) {
+          var selectedGrade = $(".swal2-content #grade option:selected").text();
+          var selectedClass = $(".swal2-content #class option:selected").text();
+          localStorage.Grade = selectedGrade;
+          localStorage.Class = selectedClass;
+          userGrade = selectedGrade;
+          userClass = selectedClass;
+          fetchData();
+        }
+      });
+    })
+    // a href="#" 클릭시 화면 상단 이동 방지
+    $('a[href="#"]').click(function (e) {
+      e.preventDefault();
+    });
   }).fail(function (xhr, status, error) {
     console.log(xhr);
     console.log(status);
@@ -127,40 +176,6 @@ if (localStorage.Grade && localStorage.Class) {
 }
 fetchData();
 
-// 변경 버튼 클릭했을 시 모달
-const settingsModal = $('#settingsModal').html();
-$('.settingsBtn').click(function () {
-  Swal.fire({
-    title: '학년/반 정보 변경',
-    html: settingsModal,
-    showCancelButton: true,
-    confirmButtonText: "저장",
-    cancelButtonText: "취소",
-    customClass: {
-      confirmButton: 'btn btn-primary btn-lg m-2',
-      cancelButton: 'btn btn-secondary btn-lg m-2'
-    },
-    onBeforeOpen: () => {
-      $(".swal2-content #grade").val(userGrade + "학년").prop("selected", true);
-      $(".swal2-content #class").val(userClass + "반").prop("selected", true);
-    },
-    focusCancel: true,
-    buttonsStyling: false,
-    heightAuto: false,
-    reverseButtons: true
-  }).then(result => {
-    if (result.value) {
-      var selectedGrade = $(".swal2-content #grade option:selected").text();
-      var selectedClass = $(".swal2-content #class option:selected").text();
-      localStorage.Grade = selectedGrade;
-      localStorage.Class = selectedClass;
-      userGrade = selectedGrade;
-      userClass = selectedClass;
-      fetchData();
-    }
-  });
-})
-
 // 정보 버튼 클릭했을 시 모달
 $('#infoBtn').click(function () {
   Swal.fire({
@@ -185,14 +200,9 @@ $('body').keydown(function (e) {
   }
 });
 
-// a href="#" 클릭시 화면 상단 이동 방지
-$('a[href="#"]').click(function(e) {
-	e.preventDefault();
-});
-
 // 서비스워커 등록
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
+  window.addEventListener('load', function () {
     navigator.serviceWorker.register('/service-worker.js');
   });
 }
