@@ -8,9 +8,8 @@
 
 let today = new Date();
 const Week_KO = ['일', '월', '화', '수', '목', '금', '토']
-
-// 스와이퍼 정의
 const navigator_ = new Swiper('.swiper-container');
+const settingsModal = $('#settingsModal').html();
 
 // ISO Format 날짜 변환
 function ISODate(date) {
@@ -26,10 +25,9 @@ function ISODate(date) {
   return year + '-' + month + '-' + day
 }
 
-// 데이터 불러오기
-function fetchData() {
-  $.getJSON("https://static.api.hdml.kr/data.v2.json", function (data) {
-    var keys = Object.keys(data)
+// 화면 그리기
+function write(data, index) {
+  var keys = Object.keys(data)
     keys.forEach(key => {
       slideId = 'hdm-slide_' + key;
       var date = new Date(key);
@@ -78,31 +76,36 @@ function fetchData() {
         }
       }
     })
-    navigator_.slideTo(keys.indexOf(ISODate(today)), 0);
+    if (index !== false) {
+      navigator_.slideTo(index, 0);
+    } else {
+      if (keys.includes(ISODate(today))) {
+        navigator_.slideTo(keys.indexOf(ISODate(today)), 0);
+      } else {
+        $(".swiper-container").hide();
+        Swal.fire({
+          icon: "error",
+          title: "캐시 새로 고침 필요",
+          text: "저장되어 있는 캐시가 너무 오래되어 새로 고침이 필요합니다. 계속하려면 장치를 인터넷에 연결한 다음 아래 버튼을 누르십시오.",
+          confirmButtonText: "새로 고침",
+          customClass: {
+            actions: 'swal-vertical-buttons',
+            confirmButton: 'btn btn-primary btn-lg mb-2'
+          },
+          buttonsStyling: false,
+          heightAuto: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        }).then(result => {
+          if (result.value) {
+            fetchData();
+          }
+        });
+      }
+    }
     $("#" + 'hdm-slide_' + keys[0] + " .swiper-btn-priv").addClass('swiper-btn-disabled')
     $("#" + 'hdm-slide_' + keys[keys.length - 1] + " .swiper-btn-next").addClass('swiper-btn-disabled')
-  }).done(function () {
-    // 로딩 끝나면 화면전환
-    $(".lds-ring").animate(
-      {
-        opacity: "0"
-      },
-      500
-    );
-    $(".lds-ring").remove();
-    $(".swiper-container").css({ 'visibility': 'visible', 'overflow-y': 'auto' });
-    $(".swiper-container").animate(
-      {
-        opacity: "1"
-      },
-      500
-    );
-    // 오후 5시 이후면, 다음 날 화면 보여주기
-    if (new Date().getHours() > 17) {
-      navigator_.slideNext();
-    }
     // 변경 버튼 클릭했을 시 모달
-    const settingsModal = $('#settingsModal').html();
     $('.settingsBtn').click(function () {
       Swal.fire({
         title: '학년/반 정보 변경',
@@ -130,7 +133,7 @@ function fetchData() {
           localStorage.Class = selectedClass;
           userGrade = selectedGrade;
           userClass = selectedClass;
-          fetchData();
+          softReload();
         }
       });
     })
@@ -138,6 +141,29 @@ function fetchData() {
     $('a[href="#"]').click(function (e) {
       e.preventDefault();
     });
+}
+
+// 데이터 불러오기
+function fetchData() {
+  $.getJSON("https://static.api.hdml.kr/data.v2.json", function (data) {
+    apiData = data;
+    write(apiData, false);
+  }).done(function () {
+    // 로딩 끝나면 화면전환
+    $(".lds-ring").animate(
+      {
+        opacity: "0"
+      },
+      500
+    );
+    $(".lds-ring").remove();
+    $(".swiper-container").css({ 'visibility': 'visible', 'overflow-y': 'auto' });
+    $(".swiper-container").animate(
+      {
+        opacity: "1"
+      },
+      500
+    );
   }).fail(function (xhr, status, error) {
     console.log(xhr);
     console.log(status);
@@ -162,6 +188,14 @@ function fetchData() {
       }
     });
   });
+}
+
+// 데이터를 새로 불러오지 않고 화면만 지운 뒤 다시 그림
+function softReload() {
+  var current_index = navigator_.activeIndex;
+  $(".swiper-wrapper").empty();
+  navigator_.update();
+  write(apiData, current_index);
 }
 
 // 학년/반 정보 불러온 뒤 데이터 로딩 실행
