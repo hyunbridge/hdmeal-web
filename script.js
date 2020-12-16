@@ -152,7 +152,7 @@ function write(data, index) {
 
 // 데이터 불러오기
 function fetchData() {
-  $.getJSON("https://static.api.hdml.kr/data.v2.json", function (data) {
+  $.getJSON("https://app.api.hdml.kr/api/v2/app/", function (data) {
     apiData = data;
     write(apiData, false);
   }).done(function () {
