@@ -4,7 +4,7 @@
 // ██╔══██║██║  ██║██║╚██╔╝██║██╔══╝  ██╔══██║██║
 // ██║  ██║██████╔╝██║ ╚═╝ ██║███████╗██║  ██║███████╗
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
-// Copyright 2019-2020, Hyungyo Seo
+// Copyright Hyungyo Seo
 
 const Week_KO = ['일', '월', '화', '수', '목', '금', '토']
 const navigator_ = new Swiper('.swiper-container');
@@ -26,57 +26,57 @@ function ISODate(date) {
   if (month < 10) {
     month = '0' + month;
   }
-  return year + '-' + month + '-' + day
+  return `${year}-${month}-${day}`
 }
 
 // 화면 그리기
 function write(data, index) {
   var keys = Object.keys(data)
     keys.forEach(key => {
-      slideId = 'hdm-slide_' + key;
+      slideId = `hdm-slide_${key}`;
       var date = new Date(key);
-      navigator_.appendSlide('<div class="swiper-slide" id="' + slideId + '">' + $('#hdm-slide').html() + '</div>');
-      $("#" + slideId + " #date").text(key + '(' + Week_KO[date.getDay()] + ')');
+      navigator_.appendSlide(`<div class="swiper-slide" id="${slideId}">${$('#hdm-slide').html()}</div>`);
+      $(`#${slideId} #date`).text(`${key}(${Week_KO[date.getDay()]})`);
 
       menu = data[key].Meal[0];
-      $("#" + slideId + " #menuBody").text("");
+      $(`#${slideId} #menuBody`).text("");
       if (!menu) {
-        $("#" + slideId + " #menuBody").text("식단정보가 없습니다.");
+        $(`#${slideId} #menuBody`).text("식단정보가 없습니다.");
       } else if (menu[0] == "") {
-        $("#" + slideId + " #menuBody").text("식단정보가 없습니다.");
+        $(`#${slideId} #menuBody`).text("식단정보가 없습니다.");
       } else {
         for (var menuLoc in menu) {
-          $("#" + slideId + " #menuBody").append("<li>" + menu[menuLoc] + "</li>");
+          $(`#${slideId} #menuBody`).append(`<li>${menu[menuLoc]}</li>`);
         }
       }
 
-      $("#" + slideId + " #ttTitle").text(userGrade + "학년 " + userClass + "반 시간표");
+      $(`#${slideId} #ttTitle`).text(`${userGrade}학년 ${userClass}반 시간표`);
       if (data[key].Timetable) {
         tt = data[key].Timetable[userGrade][userClass];
         console.log(tt);
-        $("#" + slideId + " #ttBody").text("");
+        $(`#${slideId} #ttBody`).text("");
         if (!tt) {
-          $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
+          $(`#${slideId} #ttBody`).text("시간표가 없습니다.");
         } else if (tt.length == 0) {
-          $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
+          $(`#${slideId} #ttBody`).text("시간표가 없습니다.");
         } else {
           for (var ttLoc in tt) {
-            $("#" + slideId + " #ttBody").append("<li>" + tt[ttLoc] + "</li>");
+            $(`#${slideId} #ttBody`).append(`<li>${tt[ttLoc]}</li>`);
           }
         }
       } else {
-        $("#" + slideId + " #ttBody").text("시간표가 없습니다.");
+        $(`#${slideId} #ttBody`).text("시간표가 없습니다.");
       }
 
       schdl = data[key].Schedule;
-      $("#" + slideId + " #schdlBody").text("");
+      $(`#${slideId} #schdlBody`).text("");
       if (!schdl) {
-        $("#" + slideId + " #schdlBody").text("학사일정이 없습니다.");
+        $(`#${slideId} #schdlBody`).text("학사일정이 없습니다.");
       } else if (schdl[0] == "") {
-        $("#" + slideId + " #schdlBody").text("학사일정이 없습니다.");
+        $(`#${slideId} #schdlBody`).text("학사일정이 없습니다.");
       } else {
         for (var schdlLoc in schdl) {
-          $("#" + slideId + " #schdlBody").append("<li>" + schdl[schdlLoc] + "</li>");
+          $(`#${slideId} #schdlBody`).append(`<li>${schdl[schdlLoc]}</li>`);
         }
       }
     })
@@ -107,11 +107,11 @@ function write(data, index) {
         });
       }
     }
-    $("#" + 'hdm-slide_' + keys[0] + " .swiper-btn-priv").addClass('swiper-btn-disabled')
-    $("#" + 'hdm-slide_' + keys[keys.length - 1] + " .swiper-btn-next").addClass('swiper-btn-disabled')
-    $("#" + 'hdm-slide_' + ISODate(yeasterday) + " #date").prepend('어제, ')
-    $("#" + 'hdm-slide_' + ISODate(today) + " #date").prepend('오늘, ')
-    $("#" + 'hdm-slide_' + ISODate(tomorrow) + " #date").prepend('내일, ')
+    $(`#hdm-slide_${keys[0]} .swiper-btn-priv`).addClass('swiper-btn-disabled')
+    $(`#hdm-slide_${keys[keys.length - 1]} .swiper-btn-next`).addClass('swiper-btn-disabled')
+    $(`#hdm-slide_${ISODate(yeasterday)} #date`).prepend('어제, ')
+    $(`#hdm-slide_${ISODate(today)} #date`).prepend('오늘, ')
+    $(`#hdm-slide_${ISODate(tomorrow)} #date`).prepend('내일, ')
     // 변경 버튼 클릭했을 시 모달
     $('.settingsBtn').click(function () {
       Swal.fire({
@@ -125,8 +125,8 @@ function write(data, index) {
           cancelButton: 'btn btn-secondary btn-lg m-2'
         },
         onBeforeOpen: () => {
-          $(".swal2-content #grade").val(userGrade + "학년").prop("selected", true);
-          $(".swal2-content #class").val(userClass + "반").prop("selected", true);
+          $(".swal2-content #grade").val(`${userGrade}학년`).prop("selected", true);
+          $(".swal2-content #class").val(`${userClass}반`).prop("selected", true);
         },
         focusCancel: true,
         buttonsStyling: false,
@@ -216,6 +216,9 @@ if (localStorage.Grade && localStorage.Class) {
   userClass = 1;
 }
 fetchData();
+
+// 저작권 표시
+$('.copyright').prepend(`&copy; 2019-${today.getFullYear()} 서현교`);
 
 // 정보 버튼 클릭했을 시 모달
 $('#infoBtn').click(function () {
