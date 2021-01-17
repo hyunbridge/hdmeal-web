@@ -6,7 +6,7 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright Hyungyo Seo
 
-const API_ORIGIN = "https://app.api.hdml.kr";
+const API_ORIGIN = "https://api.hdml.kr";
 
 
 importScripts('https://cdn.jsdelivr.net/npm/workbox-sw@5.1.3/build/workbox-sw.js');
