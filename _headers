@@ -1,0 +1,7 @@
+/*
+  Content-Security-Policy: default-src 'none'; connect-src 'self' https://cdn.jsdelivr.net https://app.api.hdml.kr; font-src data: https://cdn.jsdelivr.net; img-src 'self'; manifest-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net
+  Referrer-Policy: no-referrer, strict-origin-when-cross-origin
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-Powered-By: HGSEO
+  X-XSS-Protection: 1; mode=block
