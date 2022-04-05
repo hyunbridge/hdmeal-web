@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'none'; connect-src 'self' https://*.cloudfront.net https://cdn.jsdelivr.net https://api.hdml.kr; font-src data: https://cdn.jsdelivr.net; img-src 'self'; manifest-src 'self'; script-src 'self' https://*.cloudfront.net https://cdn.jsdelivr.net https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://*.cloudfront.net https://cdn.jsdelivr.net
+  Content-Security-Policy: default-src 'none'; connect-src 'self' https://*.cloudfront.net https://cdn.jsdelivr.net https://static.hdml.kr; font-src data: https://cdn.jsdelivr.net; img-src 'self'; manifest-src 'self'; script-src 'self' https://*.cloudfront.net https://cdn.jsdelivr.net https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://*.cloudfront.net https://cdn.jsdelivr.net
   Referrer-Policy: no-referrer, strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
